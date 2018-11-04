@@ -10,9 +10,15 @@ class AppDelegate
     @window.rootViewController = navigationController
     @window.makeKeyAndVisible
 
-    AFMotion::JSON.get("http://jsonip.com") do |result|
-      p result.object["ip"]
-    end
+    url = NSURL.URLWithString('https://swapi.co')
+    client = AFHTTPSessionManager.alloc.initWithBaseURL(url)
+    client.GET('/api/films',
+        parameters:nil,
+        success: lambda { |request, response|
+          puts "In success"
+        }, failure: lambda {|request, error| # correct number of parameters is important
+          puts "In failure"
+        })
 
     true
   end

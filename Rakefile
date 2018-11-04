@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-$:.unshift("/Library/RubyMotion/lib")
+#$:.unshift("/Library/RubyMotion/lib")
+$:.unshift("/Library/RubyMotion5.14/lib")
 $:.unshift("~/.rubymotion/rubymotion-templates")
 
 # ===========================================================================================
@@ -55,7 +56,7 @@ Motion::Project::App.setup do |app|
   app.interface_orientations = [:portrait]
   app.info_plist['UIRequiresFullScreen'] = true
   app.info_plist['ITSAppUsesNonExemptEncryption'] = false
-
+  app.info_plist['NSAppTransportSecurity'] = { 'NSAllowsArbitraryLoads' => true }
   # ===========================================================================================
   # 6. To deploy to an actual device, you will need to create a developer certificate at:
   #    https://developer.apple.com/account/ios/certificate/development
@@ -91,6 +92,10 @@ Motion::Project::App.setup do |app|
   #    point to your production provisions (Step 8).
   # ===========================================================================================
   # app.entitlements['beta-reports-active'] = true
+
+  app.pods do
+    pod 'AFNetworking', '~> 2.5'
+  end
 end
 
 def define_icon_defaults!(app)
